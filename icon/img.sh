@@ -5,10 +5,7 @@ CURRENT_DIR=$(basename "$1")
 OUTPUT_FILE=$1"/img.json"
 
 # 获取图片名称列表
-# image_names=($(find $IMAGES_DIR -type f -exec basename {} \;))
-# image_names=($(ls $IMAGES_DIR/*.jpg $IMAGES_DIR/*.png))
 image_names=($(find $IMAGES_DIR -type f \( -name "*.jpg" -o -name "*.png" \) -exec basename {} \;))
-# image_names=($(find . -maxdepth 1 -type f \( -iname \*.jpg -o -iname \*.jpeg -o -iname \*.png -o -iname \*.gif \)))
 
 # 输出到json文件
 echo "{" > $OUTPUT_FILE

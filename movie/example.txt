@@ -1,0 +1,27 @@
+#EXTM3U
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg"  group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240221/11707_3f678833/index.m3u8
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg" group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240221/11706_97e2e5b7/index.m3u8
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg" group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240221/11705_8fd33cd1/index.m3u8
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg" group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240222/11745_1e66046c/index.m3u8
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg" group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240222/11744_c063e038/index.m3u8
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg" group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240223/11814_53b93d10/index.m3u8
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg" group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240223/11813_d0004d96/index.m3u8
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg" group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240225/11873_d1cd903b/index.m3u8
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg" group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240225/11877_63d928f7/index.m3u8
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg" group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240226/11913_e138e6d7/index.m3u8
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg" group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240227/12046_4167d3bb/index.m3u8
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg" group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240228/12074_99ad5571/index.m3u8
+#EXTINF:-1,tvg-id="猎冰" tvg-name="猎冰"  tvg-logo="https://img.lzzyimg.com/upload/vod/20240221-1/c3ea92c16d5e78611f93508d1ae48cd9.jpg" group-title="电视剧",猎冰
+https://v.cdnlz12.com/20240229/12123_996f6409/index.m3u8
