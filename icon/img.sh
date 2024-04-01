@@ -2,7 +2,7 @@
 
 IMAGES_DIR=$1
 CURRENT_DIR=$(basename "$1")
-OUTPUT_FILE=$1"/img.json"
+OUTPUT_FILE=$1"/imgurl.json"
 
 # 获取图片名称列表
 # image_names=($(find $IMAGES_DIR -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg"\) -exec basename {} \;))
