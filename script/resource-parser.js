@@ -2678,7 +2678,7 @@ function get_emoji(emojip, sname) {
             }
         }
     }
-    if (flag == 0) { return ["🏴‍☠️ " + sname.replace(/[\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF]/g, "").trim(), "🏴‍☠️"] }
+    if (flag == 0) { return ["🇨🇳 " + sname.replace(/[\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF]/g, "").trim(), "🇨🇳"] }
 }
 
 //emoji 处理
