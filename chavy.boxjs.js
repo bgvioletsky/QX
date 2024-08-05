@@ -44,7 +44,7 @@ $.json = $.name // `接口`类请求的响应体
 $.html = $.name // `页面`类请求的响应体
 
 // 页面源码地址
-$.web = `https://mirror.ghproxy.com/https://raw.githubusercontent.com/bgvioletsky/QX/main/index.html`
+$.web = `https://mirror.ghproxy.com/https://raw.githubusercontent.com/bgvioletsky/QX/main/s.html`
 // 版本说明地址 (Release Note)
 $.ver = `https://raw.githubusercontent.com/chavyleung/scripts/master/box/release/box.release.json`
 
@@ -351,11 +351,284 @@ function getBoxData() {
   return box
 }
 
+/**
+ * 获取系统配置
+ */
+function getSystemCfgs() {
+  // prettier-ignore
+  return {
+    env: $.isStash() ? 'Stash' : $.isShadowrocket() ? 'Shadowrocket' : $.isLoon() ? 'Loon' : $.isQuanX() ? 'QuanX' : $.isSurge() ? 'Surge' : 'Node',
+    version: $.version,
+    versionType: $.versionType,
+    envs: [
+      { id: 'Surge', icons: ['https://raw.githubusercontent.com/Orz-3/mini/none/surge.png', 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/surge.png'] },
+      { id: 'QuanX', icons: ['https://raw.githubusercontent.com/Orz-3/mini/none/quanX.png', 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/quantumultx.png'] },
+      { id: 'Loon', icons: ['https://raw.githubusercontent.com/Orz-3/mini/none/loon.png', 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/loon.png'] },
+      { id: 'Shadowrocket', icons: ['https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/shadowrocket.png', 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/shadowrocket.png'] },
+      { id: 'Stash', icons: ['https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/stash.png', 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/stash.png'] }
+    ],
+    chavy: { id: 'ChavyLeung', icon: 'https://avatars3.githubusercontent.com/u/29748519', repo: 'https://github.com/chavyleung/scripts' },
+    senku: { id: 'GideonSenku', icon: 'https://avatars1.githubusercontent.com/u/39037656', repo: 'https://github.com/GideonSenku' },
+    id77: { id: 'id77', icon: 'https://avatars0.githubusercontent.com/u/9592236', repo: 'https://github.com/id77' },
+    orz3: { id: 'Orz-3', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Orz-3.png', repo: 'https://github.com/Orz-3/' },
+    boxjs: { id: 'BoxJs', show: false, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/box.png', icons: ['https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/box.png', 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/box.png'], repo: 'https://github.com/chavyleung/scripts' },
+    defaultIcons: ['https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/appstore.png', 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/appstore.png']
+  }
+}
 
+/**
+ * 获取内置应用
+ */
+function getSystemApps() {
+  // prettier-ignore
+  const sysapps = [
+    {
+      id: 'BoxSetting',
+      name: '偏好设置',
+      descs: ['可手动执行一些抹掉数据的脚本', '可设置明暗两种主题下的主色调', '可设置壁纸清单'],
+      keys: [
+        '@chavy_boxjs_userCfgs.httpapi',
+        '@chavy_boxjs_userCfgs.bgimg',
+        '@chavy_boxjs_userCfgs.http_backend',
+        '@chavy_boxjs_userCfgs.color_dark_primary',
+        '@chavy_boxjs_userCfgs.color_light_primary'
+      ],
+      settings: [
+        { id: '@chavy_boxjs_userCfgs.httpapis', name: 'HTTP-API (Surge)', val: '', type: 'textarea', placeholder: ',examplekey@127.0.0.1:6166', autoGrow: true, rows: 2, persistentHint:true, desc: '示例: ,examplekey@127.0.0.1:6166! 注意: 以逗号开头, 逗号分隔多个地址, 可加回车' },
+        { id: '@chavy_boxjs_userCfgs.httpapi_timeout', name: 'HTTP-API Timeout (Surge)', val: 20, type: 'number', persistentHint:true, desc: '如果脚本作者指定了超时时间, 会优先使用脚本指定的超时时间.' },
+        { id: '@chavy_boxjs_userCfgs.http_backend', name: 'HTTP Backend (Quantumult X)', val: '', type: 'text',placeholder: 'http://127.0.0.1:9999', persistentHint:true, desc: '示例: http://127.0.0.1:9999 ! 注意: 必须是以 http 开头的完整路径, 不能是 / 结尾' },
+        { id: '@chavy_boxjs_userCfgs.debugger_webs', name: '调试地址', val: 'Dev体验,https://raw.githubusercontent.com/chavyleung/scripts/boxjs.dev/box/chavy.boxjs.html', type: 'textarea', placeholder: '每行一个配置，用逗号分割每个配置的名字和链接：配置,url', persistentHint:true, autoGrow: true, rows: 2, desc: '逗号分隔名字和链接, 回车分隔多个地址' },
+        { id: '@chavy_boxjs_userCfgs.bgimgs', name: '背景图片清单', val: '无,\n跟随系统,跟随系统\nlight,http://api.btstu.cn/sjbz/zsy.php\ndark,https://uploadbeta.com/api/pictures/random\n妹子,http://api.btstu.cn/sjbz/zsy.php', type: 'textarea', placeholder: '无,{回车} 跟随系统,跟随系统{回车} light,图片地址{回车} dark,图片地址{回车} 妹子,图片地址', persistentHint:true, autoGrow: true, rows: 2, desc: '逗号分隔名字和链接, 回车分隔多个地址' },
+        { id: '@chavy_boxjs_userCfgs.bgimg', name: '背景图片', val: '', type: 'text', placeholder: 'http://api.btstu.cn/sjbz/zsy.php', persistentHint:true, desc: '输入背景图标的在线链接' },
+        { id: '@chavy_boxjs_userCfgs.changeBgImgEnterDefault', name: '手势进入壁纸模式默认背景图片', val: '', type: 'text', placeholder: '填写上面背景图片清单的值', persistentHint:true, desc: '' },
+        { id: '@chavy_boxjs_userCfgs.changeBgImgOutDefault', name: '手势退出壁纸模式默认背景图片', val: '', type: 'text', placeholder: '填写上面背景图片清单的值', persistentHint:true, desc: '' },
+        { id: '@chavy_boxjs_userCfgs.color_light_primary', name: '明亮色调', canvas: true, val: '#F7BB0E', type: 'colorpicker', desc: '' },
+        { id: '@chavy_boxjs_userCfgs.color_dark_primary', name: '暗黑色调', canvas: true, val: '#2196F3', type: 'colorpicker', desc: '' }
+      ],
+      scripts: [
+        {
+          name: "抹掉：所有缓存",
+          script: "https://raw.githubusercontent.com/chavyleung/scripts/master/box/scripts/boxjs.revert.caches.js"
+        },
+        {
+          name: "抹掉：收藏应用",
+          script: "https://raw.githubusercontent.com/chavyleung/scripts/master/box/scripts/boxjs.revert.usercfgs.favapps.js"
+        },
+        {
+          name: "抹掉：用户偏好",
+          script: "https://raw.githubusercontent.com/chavyleung/scripts/master/box/scripts/boxjs.revert.usercfgs.js"
+        },
+        {
+          name: "抹掉：所有会话",
+          script: "https://raw.githubusercontent.com/chavyleung/scripts/master/box/scripts/boxjs.revert.usercfgs.sessions.js"
+        },
+        {
+          name: "抹掉：所有备份",
+          script: "https://raw.githubusercontent.com/chavyleung/scripts/master/box/scripts/boxjs.revert.baks.js"
+        },
+        {
+          name: "抹掉：BoxJs (注意备份)",
+          script: "https://raw.githubusercontent.com/chavyleung/scripts/master/box/scripts/boxjs.revert.boxjs.js"
+        }
+      ],
+      author: '@chavyleung',
+      repo: 'https://github.com/chavyleung/scripts/blob/master/box/switcher/box.switcher.js',
+      icons: [
+        'https://raw.githubusercontent.com/chavyleung/scripts/master/box/icons/BoxSetting.mini.png',
+        'https://raw.githubusercontent.com/chavyleung/scripts/master/box/icons/BoxSetting.png'
+      ]
+    },
+    {
+      id: 'BoxSwitcher',
+      name: '会话切换',
+      desc: '打开静默运行后, 切换会话将不再发出系统通知 \n注: 不影响日志记录',
+      keys: [],
+      settings: [{ id: 'CFG_BoxSwitcher_isSilent', name: '静默运行', val: false, type: 'boolean', desc: '切换会话时不发出系统通知!' }],
+      author: '@chavyleung',
+      repo: 'https://github.com/chavyleung/scripts/blob/master/box/switcher/box.switcher.js',
+      icons: [
+        'https://raw.githubusercontent.com/chavyleung/scripts/master/box/icons/BoxSwitcher.mini.png',
+        'https://raw.githubusercontent.com/chavyleung/scripts/master/box/icons/BoxSwitcher.png'
+      ],
+      script: 'https://raw.githubusercontent.com/chavyleung/scripts/master/box/switcher/box.switcher.js'
+    },
+    {
+      id: "BoxGist",
+      name: "Gist备份",
+      keys: [
+        "@gist.token",
+        "@gist.username",
+        "@gist.split",
+        "@gist.revision_options",
+        "@gist.backup_type"
+      ],
+      author: "@dompling",
+      repo: "https://github.com/dompling/Script/tree/master/gist",
+      icons: [
+        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png",
+        "https://raw.githubusercontent.com/Former-Years/icon/master/github-bf.png"
+      ],
+      descs_html: [
+        "<h2>Token的获取方式</h2>",
+        "<ol>头像菜单 -></ol>",
+        "<ol>Settings -></ol>",
+        "<ol>Developer settings -></ol>",
+        "<ol>Personal access tokens -></ol>",
+        "<ol>Generate new token -></ol>",
+        "<ol>在里面找到 gist 勾选提交</ol>",
+        "<h2>Gist Revision Id</h2>",
+        "<ol>打开Gist项目</ol>",
+        "<ol>默认为Code，选择Revisions</ol>",
+        "<ol>找到需要恢复的版本文件</ol>",
+        "<ol>点击右上角【...】>【View file】</ol>",
+        "<ol>浏览器地址最后一串为 RevisionId</ol>"
+      ],
+      scripts: [
+        {
+          name: "备份 Gist",
+          script: "https://raw.githubusercontent.com/dompling/Script/master/gist/backup.js"
+        },
+        {
+          name: "从 Gist 恢复",
+          script: "https://raw.githubusercontent.com/dompling/Script/master/gist/restore.js"
+        },
+        {
+          name: "更新历史版本",
+          script: "https://raw.githubusercontent.com/dompling/Script/master/gist/commit.js"
+        }
+      ],
+      settings: [
+        {
+          id: "@gist.split",
+          name: "用户数据分段",
+          val: null,
+          type: "number",
+          placeholder: "用户数据过大时，请进行拆分防止内存警告⚠️",
+          desc: "值为数字，拆分段数比如 2 就拆分成两个 datas."
+        },
+        {
+          id: "@gist.revision_id",
+          type: "modalSelects",
+          name: "历史版本RevisionId",
+          desc: "不填写时，默认获取最新，恢复后会自动清空。选择无内容时，请运行上方更新历史版本",
+          items: "@gist.revision_options"
+        },
+        {
+          id: "@gist.backup_type",
+          name: "备份/恢复内容",
+          val: "usercfgs,datas,sessions,curSessions,backups,appSubCaches",
+          type: "checkboxes",
+          items: [
+            {
+              key: "usercfgs",
+              label: "用户偏好"
+            },
+            {
+              key: "datas",
+              label: "用户数据"
+            },
+            {
+              key: "sessions",
+              label: "应用会话"
+            },
+            {
+              key: "curSessions",
+              label: "当前会话"
+            },
+            {
+              key: "backups",
+              label: "备份索引"
+            },
+            {
+              key: "appSubCaches",
+              label: "应用订阅缓存"
+            }
+          ]
+        },
+        {
+          id: "@gist.username",
+          name: "用户名",
+          val: null,
+          type: "text",
+          placeholder: "github 用户名",
+          desc: "必填"
+        },
+        {
+          id: "@gist.token",
+          name: "Personal access tokens",
+          val: null,
+          type: "text",
+          placeholder: "github personal access tokens",
+          desc: "必填"
+        }
+      ]
+    }
+  ]
+  return sysapps
+}
 
+/**
+ * 获取用户配置
+ */
+function getUserCfgs() {
+  const defcfgs = {
+    gist_cache_key: [],
 
+    favapps: [],
+    appsubs: [],
+    viewkeys: [],
+    isPinedSearchBar: true,
+    httpapi: 'examplekey@127.0.0.1:6166',
+    http_backend: ''
+  }
+  const usercfgs = Object.assign(defcfgs, $.getjson($.KEY_usercfgs, {}))
 
+  // 处理异常数据：删除所有为 null 的订阅
+  if (usercfgs.appsubs.includes(null)) {
+    usercfgs.appsubs = usercfgs.appsubs.filter((sub) => sub)
+    $.setjson(usercfgs, $.KEY_usercfgs)
+  }
 
+  return usercfgs
+}
+
+/**
+ * 获取`应用订阅`缓存
+ */
+function getAppSubCaches() {
+  return $.getjson($.KEY_app_subCaches, {})
+}
+
+/**
+ * 获取全局备份列表
+ */
+function getGlobalBaks() {
+  let backups = $.getjson($.KEY_backups, [])
+
+  // 处理异常数据：删除所有为 null 的备份
+  if (backups.includes(null)) {
+    backups = backups.filter((bak) => bak)
+    $.setjson(backups, $.KEY_backups)
+  }
+
+  return backups
+}
+
+/**
+ * 获取版本清单
+ */
+function getVersions() {
+  return $.http.get($.ver).then(
+    (resp) => {
+      try {
+        $.json = $.toObj(resp.body)
+      } catch {
+        $.json = {}
+      }
+    },
+    () => ($.json = {})
+  )
+}
 
 /**
  * 获取应用会话
