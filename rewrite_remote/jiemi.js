@@ -53,8 +53,7 @@ $.ver = `https://raw.githubusercontent.com/chavyleung/scripts/master/box/release
   $.isMute = [true, 'true'].includes($.getdata('@chavy_boxjs_userCfgs.isMute'))
 
   // 请求路径
-  $.path = getPath($request.url)
-
+  $.path = $request.url
   // 请求参数 /api/save?id=xx&name=xx => {id: 'xx', name: 'xx'}
   const [, query] = $.path.split('?')
   $.queries = query
@@ -118,17 +117,6 @@ function getHost(url) {
   return url.slice(0, url.indexOf('/', 8))
 }
 
-/**
- * http://boxjs.com/ => ``
- * http://boxjs.com/api/getdata => `/api/getdata`
- */
-function getPath(url) {
-  // 如果以`/`结尾, 去掉最后一个`/`
-  const end = url.lastIndexOf('/') === url.length - 1 ? -1 : undefined
-  // slice第二个参数传 undefined 会直接截到最后
-  // indexOf第二个参数用来跳过前面的 "https://"
-  return url.slice(url.indexOf('/', 8), end)
-}
 
 /**
  * ===================================
