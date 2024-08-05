@@ -265,12 +265,12 @@ const Change = {
     convertXbsToJson() {
         const xbsFileInput = document.getElementById("xbsFile");
         const file = xbsFileInput.files[0];
-
+    
         if (!file) {
             alert("Please select an XBS file");
             return;
         }
-
+    
         const reader = new FileReader();
         reader.onload = function (e) {
             const data = new Uint8Array(e.target.result);
@@ -278,9 +278,10 @@ const Change = {
                 const json = xbsTools.XBS2Json(data);
                 const jsonBlob = new Blob([json], { type: "application/json" });
                 const downloadLink = document.createElement("a");
+                downloadLink.download = `${file.name.replace(/\.xbs$/, '')}.json`;
                 downloadLink.href = URL.createObjectURL(jsonBlob);
-                downloadLink.download = "converted.json";
                 downloadLink.click();
+            
             } catch (error) {
                 console.error("Error converting XBS to JSON:", error);
                 alert("Error converting XBS to JSON");
@@ -304,8 +305,9 @@ const Change = {
                 const xbs = xbsTools.Json2XBS(data);
                 const xbsBlob = new Blob([xbs], { type: "application/octet-stream" });
                 const downloadLink = document.createElement("a");
+                // 保留原文件名，仅更改扩展名为 .xbs
+                downloadLink.download = `${file.name.replace(/\.json$/, '')}.xbs`;
                 downloadLink.href = URL.createObjectURL(xbsBlob);
-                downloadLink.download = "converted.xbs";
                 downloadLink.click();
             } catch (error) {
                 console.error("Error converting JSON to XBS:", error);
@@ -313,5 +315,5 @@ const Change = {
             }
         };
         reader.readAsArrayBuffer(file);
-    },
+    }
 };
