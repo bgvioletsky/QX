@@ -44,7 +44,7 @@ $.json = $.name // `接口`类请求的响应体
 $.html = $.name // `页面`类请求的响应体
 
 // 页面源码地址
-$.web = `https://mirror.ghproxy.com/https://raw.githubusercontent.com/bgvioletsky/QX/main/s.html`
+$.web = `https://raw.githubusercontent.com/bgvioletsky/QX/main/s.html`
 // 版本说明地址 (Release Note)
 $.ver = `https://raw.githubusercontent.com/chavyleung/scripts/master/box/release/box.release.json`
 
