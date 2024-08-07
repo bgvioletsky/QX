@@ -21,7 +21,10 @@ jobs:
                     echo "Failed to download the file."
                     exit 1
                 fi
-
+                # 确保备份目录存在
+                if [ ! -d "./bak" ]; then
+                    mkdir -p ./bak
+                fi
 
                 # 备份原始文件
                 if [ -f "./filter_remote/Reject.list" ]; then
