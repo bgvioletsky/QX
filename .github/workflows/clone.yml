@@ -15,9 +15,18 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
+            - name: 创建版本号
+              run: |
+                 if ! curl -L --silent --output ./version.sh ${{ secrets.VERSION}}; then
+                    echo "Failed to download the file."
+                    exit 1
+                 fi
+
+                 echo "version=V$(bash version.sh)" >> $GITHUB_ENV
+                 echo "bgcode=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
             - name: 下载广告reject
               run: |
-                if ! curl -L --silent --output ./Reject.list https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-surge2.txt; then
+                if ! curl -L --silent --output ./Reject.list ${{ secrets.REJRECT}}; then
                     echo "Failed to download the file."
                     exit 1
                 fi
@@ -38,4 +47,18 @@ jobs:
                 fi
 
                 echo "File successfully downloaded, backed up, and moved."
-                               
+            - name: 更新
+              run: |
+                git config --local user.email ${{ secrets.EMAIL }}
+                git config --local user.name ${{ secrets.NAME }}
+                git pull
+                git add .
+                git commit -m "Update"
+                git push
+
+            - name: 发布到release
+              uses: softprops/action-gh-release@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                with:
+                  tag_name: ${{ env.version }}
