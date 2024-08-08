@@ -52,13 +52,13 @@ jobs:
                 git config --local user.email ${{ secrets.EMAIL }}
                 git config --local user.name ${{ secrets.NAME }}
                 git pull
-                git add .
+                git add bak filter_remote version
                 git commit -m "Update"
                 git push
-
+                
             - name: 发布到release
               uses: softprops/action-gh-release@v1
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                with:
+              with:
                   tag_name: ${{ env.version }}
+                  body_path: ${{ env.bgcode }}
+            
