@@ -26,7 +26,8 @@ jobs:
                  fi
 
                  echo "version=$(bash version.sh)" >> $GITHUB_ENV
-                 echo "bgcode=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+                 echo "## $(bash version.sh)" >> bgcode.txt
+                 echo "bgcode=$(date +'%Y-%m-%d %H:%M:%S')" >> bgcode.txt
             - name: 下载广告reject
               run: |
                 if ! curl -L --silent --output ./Reject.list ${{ env.REJECT}}; then
@@ -63,5 +64,5 @@ jobs:
               uses: softprops/action-gh-release@v1
               with:
                   tag_name: ${{ env.version }}
-                  body_path: ${{ env.bgcode }}
+                  body_path: bgcode.txt
             
