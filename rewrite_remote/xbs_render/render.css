@@ -78,3 +78,9 @@ h1 {
     background-color: #a5f2e7;
     cursor: pointer;
 }
+#output {
+    background-color: #45c7e1;
+    border: 0px;
+    border-radius: 4px;
+    width: 10%;
+}

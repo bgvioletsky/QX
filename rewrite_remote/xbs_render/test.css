@@ -1,0 +1,115 @@
+body {
+    padding: 0px;
+    margin: 0px;
+    background-color: #fffcea;
+}
+h1 {
+    text-align: center;
+    font: 3em sans-serif;
+}
+.box {
+   height: 60%;
+   color: #000;
+   text-align: center;
+   background-color: #eafdff;
+   align-items: stretch;
+   min-height: 70%; /* 或者其他高度 */
+   min-width: 500px;
+   /* border: 1px solid #000;  */
+}
+.file-upload{
+    height: 300px;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+.isd {
+    background-color: #8a93942f;
+    height: 200px;
+    padding: 3em;
+    padding-top: 10px;
+    margin-left: 20%;
+    margin-right: 20%;
+    border: 1px;
+    border-radius: 30px;
+}
+.file-upload svg {
+    width: 100px;
+    height: 100px;
+    color: #0ad6fa;
+    padding: 20px;
+}
+.p1 {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    color: black;
+}
+
+.bt{
+    border-radius: 4px;
+    margin: 12px;
+}
+.bt button {
+    width: 100px;
+    background-color: #45c7e1;
+    border: 0px;
+    border-radius: 12px;
+    margin: 10px;
+    height: 50px;
+    color: rgba(203, 18, 176, 0.857);
+}
+#output {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    color: black;
+    text-align: center;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+#output div {
+    width: 200px;
+    background-color: antiquewhite;
+    border: 0px;
+    border-radius: 20px;
+    justify-content: center;
+    margin: 10px;
+    align-items: center;
+    overflow: hidden;
+}
+/* @media screen and (min-width: 800px) {
+    #output div {
+        width:fit-content;
+        background-color: antiquewhite;
+        border: 0px;
+        border-radius: 20px;
+        justify-content: center;
+        margin: 10px;
+        align-items: center;
+        overflow: hidden;
+    }
+  } */
+  .file-upload {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+  }
+  .file-upload input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: transparent;
+    cursor: inherit;
+    z-index: 1;
+  }
