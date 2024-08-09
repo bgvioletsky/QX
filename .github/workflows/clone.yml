@@ -4,6 +4,8 @@ name: remote clone
 on:
   schedule:
    - cron: '5 16 * * *'  # 本地时间每天的 1:00 执行
+  push: 
+    
 env:
     TZ: Asia/Shanghai
 jobs:
