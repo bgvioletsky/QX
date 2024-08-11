@@ -1,29 +1,93 @@
-'''
-Author: bgcode
-Date: 2024-08-11 09:04:38
-LastEditors: bgcode
-LastEditTime: 2024-08-11 09:05:38
-Description: 
-FilePath: /QX/script/proxy.py
-'''
 import requests
 from lxml import html
+import base64
+import re
+import time
+def safe_decode(data):
+    # 补足长度以满足base64解码要求
+    padding = '=' * (4 - len(data) % 4)
+    data += padding
+    try:
+        return base64.b64decode(data).decode('utf-8')
+    except Exception as e:
+        print(f"Error decoding data: {e}")
+        return None
 
-url = "https://jc.guanxi.cloudns.be/"
-try:
-    response = requests.get(url, timeout=10)
-    response.raise_for_status()
-    tree = html.fromstring(response.text)
-    a_tag = tree.xpath("//div[@class='header']/a")[0]
-    link = a_tag.get("href")
+def safe_encode(data):
+    try:
+        byte_data = data.encode('utf-8')
+        encoded_data = base64.b64encode(byte_data)
+        return encoded_data.decode('utf-8')
+    except Exception as e:
+        print(f"Error encoding data: {e}")
+        return None
 
-    local_filename = "guanxi"
-    with requests.get(link, stream=True, timeout=10) as r:
-        r.raise_for_status()
-        with open(local_filename, "wb") as f:
-            for chunk in r.iter_content(chunk_size=8192):
-                if chunk:
-                    f.write(chunk)
-    print(f"File downloaded successfully to {local_filename}")
-except Exception as e:
-    print(f"An error occurred: {e}")
+def extract_remarks(url):
+    # 使用正则表达式匹配 'remarks=' 后面的内容直到下一个 '&'
+    regex = r'remarks=(.*?)&'
+    match = re.search(regex, url)
+    if match:
+        return match.group(1)
+    else:
+        return None
+
+def process_url(url, max_retries=3, retry_delay=5):
+    retries = 0
+    while retries <= max_retries:
+        try:
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            tree = html.fromstring(response.text)
+            a_tag = tree.xpath("//div[@class='header']/a")[0]
+            link = a_tag.get("href")
+
+            # 验证链接是否有效
+            if not link.startswith('http'):
+                raise ValueError("Invalid URL format")
+
+            # 下载文件内容
+            with requests.get(link, stream=True, timeout=10) as r:
+                r.raise_for_status()
+                file_content = r.content
+                return file_content
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            retries += 1
+            if retries > max_retries:
+                print("Maximum retries exceeded.")
+                return None
+            time.sleep(retry_delay)
+
+def transform_data(data):
+    transformed_data = ""
+    data = safe_decode(data)
+
+    for line in data.strip().split('\n'):
+        if line.startswith("ssr://"):
+            encoded_line = line.replace("ssr://", "").replace("-", "+").replace("_", "/")
+            decoded_line = safe_decode(encoded_line)
+            remarks = extract_remarks(decoded_line)
+            if remarks:
+                decoded_line = decoded_line.replace(remarks,"").replace("+", "-").replace("/", "_")
+                transformed_line = safe_encode(decoded_line)
+                transformed_line = "ssr://" + transformed_line
+                transformed_data += transformed_line + "\n"
+        elif line.startswith("ss://"):
+            dd=re.match(r'#(.*?)', line)
+            encoded_line = line.replace(dd, "").replace("-", "+").replace("_", "/")
+            transformed_data += encoded_line + "\n"
+    return safe_encode(transformed_data)
+
+# 主程序入口
+if __name__ == "__main__":
+    url = "https://jc.guanxi.cloudns.be/"
+    file_content = process_url(url)
+    print(file_content)
+    if file_content is not None:
+        # 将文件内容解码为字符串
+        data = file_content.decode('utf-8')
+        transformed_data = transform_data(data)
+        with open('guanxi', 'w', encoding='utf-8') as file:
+            file.write(transformed_data)
+    else:
+        print("Failed to download the file.")
