@@ -87,18 +87,22 @@ jobs:
                     exit 1
                 fi
                 echo "File successfully downloaded, backed up, and moved."
-            - name: 更新
+            - name: "ls"
               run: |
-                git config --local user.email ${{ secrets.EMAIL }}
-                git config --local user.name ${{ secrets.NAME }}
-                git pull
-                git add bak filter_remote version proxy
-                git commit -m "Update"
-                git push
+                 ls -l
+            
+            # - name: 更新
+            #   run: |
+            #     git config --local user.email ${{ secrets.EMAIL }}
+            #     git config --local user.name ${{ secrets.NAME }}
+            #     git pull
+            #     git add bak filter_remote version proxy
+            #     git commit -m "Update"
+            #     git push
                 
-            - name: 发布到release
-              uses: softprops/action-gh-release@v1
-              with:
-                  tag_name: ${{ env.version }}
-                  body_path: bgcode.txt
+            # - name: 发布到release
+            #   uses: softprops/action-gh-release@v1
+            #   with:
+            #       tag_name: ${{ env.version }}
+            #       body_path: bgcode.txt
             
