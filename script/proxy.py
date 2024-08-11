@@ -75,21 +75,20 @@ def transform_data(data):
             xx=safe_encode(txt.replace("[TG]@MFJD666","")+"[TG]阡 风")
             if remarks:
                 decoded_line = decoded_line.replace(remarks, xx).replace("+", "-").replace("/", "_")
-                print(decoded_line)
                 transformed_line = safe_encode(decoded_line)
                 transformed_line = "ssr://" + transformed_line
                 
                 # 只有当不是最后一行时才添加换行符
-                if i < len(lines) - 1:
-                    transformed_data += transformed_line + "\n"
-                else:
-                    transformed_data += transformed_line
+                # if i < len(lines) - 1:
+                transformed_data += transformed_line + "\n"
+                # else:
+                #     transformed_data += transformed_line
         else:
             # 同样检查是否为最后一行
-            if i < len(lines) - 1:
+            # if i < len(lines) - 1:
                 transformed_data += line + "\n"
-            else:
-                transformed_data += line
+            # else:
+            #     transformed_data += line
 
     return safe_encode(transformed_data)
 
