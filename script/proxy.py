@@ -48,8 +48,13 @@ def process_url(url, max_retries=3, retry_delay=5):
             # 下载文件内容
             with requests.get(link, stream=True, timeout=10) as r:
                 r.raise_for_status()
-                file_content = r.content
-                return file_content
+                with open("guanxi", "wb") as f:
+                    for chunk in r.iter_content(chunk_size=8192):
+                        if chunk:
+                            f.write(chunk)
+                
+                # file_content = r.content
+                return "guanxi"
         except Exception as e:
             print(f"An error occurred: {e}")
             retries += 1
@@ -96,11 +101,11 @@ def transform_data(data):
 if __name__ == "__main__":
     url = "https://jc.guanxi.cloudns.be/"
     file_content = process_url(url)
-    if file_content is not None:
-        # 将文件内容解码为字符串
-        data = file_content.decode('utf-8')
-        transformed_data = transform_data(data)
-        with open('guanxi.txt', 'w', encoding='utf-8') as file:
-            file.write(transformed_data)
-    else:
-        print("Failed to download the file.")
+    # if file_content is not None:
+    #     # 将文件内容解码为字符串
+    #     data = file_content.decode('utf-8')
+    #     transformed_data = transform_data(data)
+    #     with open('guanxi.txt', 'w', encoding='utf-8') as file:
+    #         file.write(transformed_data)
+    # else:
+    #     print("Failed to download the file.")
