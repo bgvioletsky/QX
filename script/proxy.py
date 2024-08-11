@@ -61,7 +61,7 @@ def process_url(url, max_retries=3, retry_delay=5):
 def transform_data(data):
     transformed_data = ""
     data = safe_decode(data)
-
+    print(data)
     for line in data.strip().split('\n'):
         if line.startswith("ssr://"):
             encoded_line = line.replace("ssr://", "").replace("-", "+").replace("_", "/")
@@ -72,10 +72,8 @@ def transform_data(data):
                 transformed_line = safe_encode(decoded_line)
                 transformed_line = "ssr://" + transformed_line
                 transformed_data += transformed_line + "\n"
-        elif line.startswith("ss://"):
-            dd=re.match(r'#(.*?)', line)
-            encoded_line = line.replace(dd, "").replace("-", "+").replace("_", "/")
-            transformed_data += encoded_line + "\n"
+        else:
+            transformed_data += line + "\n"
     return safe_encode(transformed_data)
 
 # 主程序入口

@@ -37,10 +37,7 @@ jobs:
                  echo "version=$(bash version.sh)" >> $GITHUB_ENV
                  echo "## $(cat version)" >> bgcode.txt
                  echo "发布时间：$(date +'%Y-%m-%d %H:%M:%S')" >> bgcode.txt
-            - name: "ls"
-              run: |
-                    ls -l
-            
+
             - name: 下载广告reject
               run: |
                 if ! curl -L --silent --output ./Reject.list ${{ env.REJECT}}; then
