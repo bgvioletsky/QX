@@ -61,19 +61,34 @@ def process_url(url, max_retries=3, retry_delay=5):
 def transform_data(data):
     transformed_data = ""
     data = safe_decode(data)
-    print(data)
-    for line in data.strip().split('\n'):
+    # print(data)
+    
+    # 获取所有行的列表
+    lines = data.strip().split('\n')
+    
+    for i, line in enumerate(lines):
         if line.startswith("ssr://"):
             encoded_line = line.replace("ssr://", "").replace("-", "+").replace("_", "/")
             decoded_line = safe_decode(encoded_line)
             remarks = extract_remarks(decoded_line)
+            
             if remarks:
-                decoded_line = decoded_line.replace(remarks,"Ymdjb2Rl").replace("+", "-").replace("/", "_")
+                decoded_line = decoded_line.replace(remarks, "Ymdjb2Rl").replace("+", "-").replace("/", "_")
                 transformed_line = safe_encode(decoded_line)
                 transformed_line = "ssr://" + transformed_line
-                transformed_data += transformed_line + "\n"
+                
+                # 只有当不是最后一行时才添加换行符
+                if i < len(lines) - 1:
+                    transformed_data += transformed_line + "\n"
+                else:
+                    transformed_data += transformed_line
         else:
-            transformed_data += line + "\n"
+            # 同样检查是否为最后一行
+            if i < len(lines) - 1:
+                transformed_data += line + "\n"
+            else:
+                transformed_data += line
+
     return safe_encode(transformed_data)
 
 # 主程序入口
