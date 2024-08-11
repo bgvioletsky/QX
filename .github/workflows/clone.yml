@@ -61,7 +61,7 @@ jobs:
                     echo "Failed to move the file."
                     exit 1
                 fi
-                if ! mv ./guanxi ./proxy/guanxi; then
+                if ! mv ./guanxi.txt ./proxy/guanxi.txt; then
                     echo "Failed to move the file."
                     exit 1
                 fi
