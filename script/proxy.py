@@ -71,9 +71,10 @@ def transform_data(data):
             encoded_line = line.replace("ssr://", "").replace("-", "+").replace("_", "/")
             decoded_line = safe_decode(encoded_line)
             remarks = extract_remarks(decoded_line)
-            
+            txt=safe_decode(remarks.replace("-", "+").replace("_", "/"))
+            xx=safe_encode(txt.replace("[TG]@MFJD666","")+"bgcode")
             if remarks:
-                decoded_line = decoded_line.replace(remarks, "Ymdjb2Rl").replace("+", "-").replace("/", "_")
+                decoded_line = decoded_line.replace(remarks, xx).replace("+", "-").replace("/", "_")
                 transformed_line = safe_encode(decoded_line)
                 transformed_line = "ssr://" + transformed_line
                 
@@ -99,7 +100,7 @@ if __name__ == "__main__":
         # 将文件内容解码为字符串
         data = file_content.decode('utf-8')
         transformed_data = transform_data(data)
-        with open('guanxi.txt', 'w', encoding='utf-8') as file:
+        with open('guanxi', 'w', encoding='utf-8') as file:
             file.write(transformed_data)
     else:
         print("Failed to download the file.")
