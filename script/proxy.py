@@ -99,7 +99,7 @@ if __name__ == "__main__":
         # 将文件内容解码为字符串
         data = file_content.decode('utf-8')
         transformed_data = transform_data(data)
-        with open('guanxi', 'w', encoding='utf-8') as file:
+        with open('guanxi.txt', 'w', encoding='utf-8') as file:
             file.write(transformed_data)
     else:
         print("Failed to download the file.")
