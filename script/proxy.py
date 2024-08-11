@@ -82,7 +82,6 @@ def transform_data(data):
 if __name__ == "__main__":
     url = "https://jc.guanxi.cloudns.be/"
     file_content = process_url(url)
-    print(file_content)
     if file_content is not None:
         # 将文件内容解码为字符串
         data = file_content.decode('utf-8')
