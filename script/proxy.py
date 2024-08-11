@@ -68,7 +68,7 @@ def transform_data(data):
             decoded_line = safe_decode(encoded_line)
             remarks = extract_remarks(decoded_line)
             if remarks:
-                decoded_line = decoded_line.replace(remarks,"").replace("+", "-").replace("/", "_")
+                decoded_line = decoded_line.replace(remarks,"Ymdjb2Rl").replace("+", "-").replace("/", "_")
                 transformed_line = safe_encode(decoded_line)
                 transformed_line = "ssr://" + transformed_line
                 transformed_data += transformed_line + "\n"
