@@ -75,7 +75,7 @@ def transform_data(data):
             xx=safe_encode(txt.replace("[TG]@MFJD666","")+"[TG]阡 风")
             if remarks:
                 decoded_line = decoded_line.replace(remarks, xx).replace("+", "-").replace("/", "_")
-                transformed_line = safe_encode(decoded_line)
+                transformed_line = safe_encode(decoded_line).replace("+", "-").replace("/", "_")
                 transformed_line = "ssr://" + transformed_line
                 
                 # 只有当不是最后一行时才添加换行符
