@@ -300,7 +300,7 @@ const Change = {
                         alert('Failed to copy text: ', err);
                     });
                 });
-                p.textContent = `name:${key}`;
+                p.textContent = `${key}\n${info}`;
                 p.style.whiteSpace = 'pre'; 
                 outputDiv.appendChild(p);
             }
