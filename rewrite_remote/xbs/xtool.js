@@ -403,7 +403,7 @@ const Change = {
 
             // 创建下载链接
             const downloadLink = document.createElement("a");
-            downloadLink.download = `${extension[0]}.${name}`;
+            downloadLink.download = extension[0]+"."+name;
             downloadLink.href = URL.createObjectURL(blob);
             // 触发下载
             Change.triggerDownload(downloadLink);
