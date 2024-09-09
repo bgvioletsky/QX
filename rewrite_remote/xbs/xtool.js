@@ -388,24 +388,23 @@ const Change = {
         try {
             let result;
             let name;
-            if (extension === 'json') {
+            if (extension[1] === 'json') {
                 result = xbsTools.Json2XBS(data);
                 name = "xbs";
-            } else if (extension === 'xbs') {
+            } else if (extension[1] === 'xbs') {
                 result = xbsTools.XBS2Json(data);
                 name = "json";
             } else {
                 throw new Error('Unsupported file format');
             }
 
-            const mimeType = extension === 'json' ? 'application/json' : 'application/octet-stream';
+            const mimeType = extension[1] === 'json' ? 'application/json' : 'application/octet-stream';
             const blob = new Blob([result], { type: mimeType });
 
             // 创建下载链接
             const downloadLink = document.createElement("a");
+            downloadLink.download = `${extension[0]}.${name}`;
             downloadLink.href = URL.createObjectURL(blob);
-            downloadLink.download = `${file.name.replace(/\.[^.]+$/, '')}.${name}`;
-
             // 触发下载
             Change.triggerDownload(downloadLink);
 
@@ -424,11 +423,7 @@ const Change = {
     reader.readAsArrayBuffer(file);
     },
     getFileExtension(filename) {
-        const lastDotIndex = filename.lastIndexOf('.');
-        if (lastDotIndex === -1) {
-            return ''; // 文件名中没有扩展名
-        }
-        return filename.slice(lastDotIndex + 1).toLowerCase(); // 提取并转换为小写
+        return filename.split('.'); // 提取并转换为小写
     },
 
     triggerDownload(link) {
