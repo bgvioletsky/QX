@@ -371,51 +371,78 @@ const Change = {
         reader.readAsArrayBuffer(file);
     },
     convertFileBasedOnExtension() {
-        const fileInput = document.getElementById(`xbsFile`);
-        const file = fileInput.files[0];
-    
-        if (!file) {
-            alert("Please select a file");
-            return;
-        }
-    
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const data = new Uint8Array(e.target.result);
-            const extension = getFileExtension(file.name);
-            console.log(file.name)
-            function getFileExtension(filename) {
-                return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
-            }
-            try {
-                let result;
-                let name;
-                if (extension === 'json') {
-                    result = xbsTools.Json2XBS(data);
-                    name="xbs"
-                } else if (extension === 'xbs') {
-                    result = xbsTools.XBS2Json(data);
-                    name="json"
-                } else {
-                    throw new Error('Unsupported file format');
-                }
-    
-                const mimeType = extension === 'json' ? 'application/json' : 'application/octet-stream';
-                const blob = new Blob([result], { type: mimeType });
-                const downloadLink = document.createElement("a");
-    
-                // 保留原文件名，仅更改扩展名
-                downloadLink.download = `${file.name.replace(/\.[^.]+$/, '')}.${name}`;
-                downloadLink.href = URL.createObjectURL(blob);
-                downloadLink.click();
-    
-            } catch (error) {
-                console.error(`转换错误 file:`, error);
-                alert(`转换错误 file: ${error.message}`);
-            }
-        };
-        reader.readAsArrayBuffer(file);
+    const fileInput = document.getElementById('xbsFile');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select a file");
+        return;
     }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const data = new Uint8Array(e.target.result);
+        const extension = Change.getFileExtension(file.name);
+        console.log(file.name);
+
+        try {
+            let result;
+            let name;
+            if (extension === 'json') {
+                result = xbsTools.Json2XBS(data);
+                name = "xbs";
+            } else if (extension === 'xbs') {
+                result = xbsTools.XBS2Json(data);
+                name = "json";
+            } else {
+                throw new Error('Unsupported file format');
+            }
+
+            const mimeType = extension === 'json' ? 'application/json' : 'application/octet-stream';
+            const blob = new Blob([result], { type: mimeType });
+
+            // 创建下载链接
+            const downloadLink = document.createElement("a");
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = `${file.name.replace(/\.[^.]+$/, '')}.${name}`;
+
+            // 触发下载
+            Change.triggerDownload(downloadLink);
+
+            
+        } catch (error) {
+            console.error(`转换错误 file:`, error);
+            alert(`转换错误 file: ${error.message}`);
+        }
+    };
+
+    reader.onerror = function (error) {
+        console.error(`文件读取错误:`, error);
+        alert(`文件读取错误: ${error.message}`);
+    };
+
+    reader.readAsArrayBuffer(file);
+    },
+    getFileExtension(filename) {
+        const lastDotIndex = filename.lastIndexOf('.');
+        if (lastDotIndex === -1) {
+            return ''; // 文件名中没有扩展名
+        }
+        return filename.slice(lastDotIndex + 1).toLowerCase(); // 提取并转换为小写
+    },
+
+    triggerDownload(link) {
+        if (document.createEvent) {
+            const event = document.createEvent('MouseEvents');
+            event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            link.dispatchEvent(event);
+        } else if (link.fireEvent) {
+            link.fireEvent('onclick');
+        } else {
+            link.click();
+        }
+    }
+
     
     
 };
