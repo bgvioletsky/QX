@@ -6,7 +6,7 @@
  * @Description: 
  * @FilePath: /QX/rewrite_remote/xbs/render.js
  */
-const url = "https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.8/rewrite_remote/xbs/render.html";
+const url = "https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.9/rewrite_remote/xbs/render.html";
 const myRequest = {
     url: url
 };

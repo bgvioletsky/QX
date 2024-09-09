@@ -267,7 +267,7 @@ const Change = {
         const file = xbsFileInput.files[0];
     
         if (!file) {
-            alert("Please select an XBS file");
+            alert("请选择一个XBS格式文件");
             return;
         }
     
@@ -309,8 +309,8 @@ const Change = {
                
             
             } catch (error) {
-                console.error("Error converting XBS to JSON:", error);
-                alert("Error converting XBS to JSON");
+                console.error("转换错误 XBS to JSON:", error);
+                alert("转换错误 XBS to JSON");
             }
         };
         reader.readAsArrayBuffer(file);
@@ -337,8 +337,8 @@ const Change = {
                 downloadLink.href = URL.createObjectURL(xbsBlob);
                 downloadLink.click();
             } catch (error) {
-                console.error("Error converting JSON to XBS:", error);
-                alert("Error converting JSON to XBS");
+                console.error("转换错误 JSON to XBS:", error);
+                alert("转换错误 JSON to XBS");
             }
         };
         reader.readAsArrayBuffer(file);
@@ -364,8 +364,8 @@ const Change = {
                 downloadLink.click();
             
             } catch (error) {
-                console.error("Error converting XBS to JSON:", error);
-                alert("Error converting XBS to JSON");
+                console.error("转换错误 XBS to JSON:", error);
+                alert("转换错误 XBS to JSON");
             }
         };
         reader.readAsArrayBuffer(file);
@@ -410,8 +410,8 @@ const Change = {
                 downloadLink.click();
     
             } catch (error) {
-                console.error(`Error converting file:`, error);
-                alert(`Error converting file: ${error.message}`);
+                console.error(`转换错误 file:`, error);
+                alert(`转换错误 file: ${error.message}`);
             }
         };
         reader.readAsArrayBuffer(file);
