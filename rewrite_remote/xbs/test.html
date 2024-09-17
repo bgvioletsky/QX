@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>简洁上传区域</title>
+  <style>
+    #uploadArea {
+      width: 300px;
+      height: 200px;
+      border: 2px solid #007bff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 16px;
+      color: #007bff;
+      cursor: pointer;
+      background-color: #f8f9fa;
+    }
+    #uploadArea.dragover {
+      background-color: #e2e6ea;
+    }
+    #fileInput {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="uploadArea">
+    点击此处选择文件
+    <input type="file" id="fileInput">
+  </div>
+
+  <script>
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+
+    uploadArea.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (file) {
+        alert('文件已选择: ' + file.name);
+      }
+    });
+
+    uploadArea.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (event) => {
+      event.preventDefault();
+      uploadArea.classList.remove('dragover');
+      const file = event.dataTransfer.files[0];
+      if (file) {
+        alert('文件已选择: ' + file.name);
+      }
+    });
+  </script>
+</body>
+</html>
