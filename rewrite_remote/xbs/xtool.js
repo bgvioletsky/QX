@@ -291,21 +291,12 @@ const Change = {
                 if (info === undefined || info === null || info === "") {
                     info = "无密码";
                 }
-
-                // const p = document.createElement("div");
-                // p.addEventListener('click', () => {
-                //     navigator.clipboard.writeText(info).then(() => {
-                //         alert('Password copied to clipboard');
-                //     }, (err) => {
-                //         alert('复制到剪贴板失败: ', err);
-                //     });
-                // });
-                // p.textContent = `${key}\n\n${info}`;
                 const p = document.createElement("div");
                 p.addEventListener('click', () => {
                     const textarea = document.createElement('textarea');
                     textarea.value = info;
-                    document.body.appendChild(textarea);
+                    if(info!=="无密码"){
+                        document.body.appendChild(textarea);
                     textarea.select();
                     
                     try {
@@ -321,10 +312,10 @@ const Change = {
                     }
 
                     document.body.removeChild(textarea);
+                    }
+                    
                 });
-                p.textContent = `${key}\n\n${info}`;
-                // p.setAttribute("data-text", info);
-                // p.id = 'press'; 
+                p.textContent = `${key}`;
                 outputDiv.appendChild(p);
             }
            
