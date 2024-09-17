@@ -292,16 +292,39 @@ const Change = {
                     info = "无密码";
                 }
 
+                // const p = document.createElement("div");
+                // p.addEventListener('click', () => {
+                //     navigator.clipboard.writeText(info).then(() => {
+                //         alert('Password copied to clipboard');
+                //     }, (err) => {
+                //         alert('复制到剪贴板失败: ', err);
+                //     });
+                // });
+                // p.textContent = `${key}\n\n${info}`;
                 const p = document.createElement("div");
                 p.addEventListener('click', () => {
-                    navigator.clipboard.writeText(info).then(() => {
-                        alert('Password copied to clipboard');
-                    }, (err) => {
-                        alert('Failed to copy text: ', err);
-                    });
+                    const textarea = document.createElement('textarea');
+                    textarea.value = info;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    
+                    try {
+                        const successful = document.execCommand('copy');
+                        if (successful) {
+                            alert('密码：'+info+'\n已经复制到剪贴板');
+                        } else {
+                            alert('复制到剪贴板失败');
+                        }
+                    } catch (err) {
+                        alert('复制到剪贴板失败');
+                        console.error('复制到剪贴板失败: ', err);
+                    }
+
+                    document.body.removeChild(textarea);
                 });
-                p.textContent = `${key}\n${info}`;
-                p.style.whiteSpace = 'pre'; 
+                p.textContent = `${key}\n\n${info}`;
+                // p.setAttribute("data-text", info);
+                // p.id = 'press'; 
                 outputDiv.appendChild(p);
             }
            

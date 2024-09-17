@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <title>香色源转换</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href=https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.12/rewrite_remote/xbs/render_radius.png sizes="32x32">
-  <script src="https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.12/rewrite_remote/xbs/xtool.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.12/rewrite_remote/xbs/render.css">
+  <link rel="icon" href=https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.13/rewrite_remote/xbs/render_radius.png sizes="32x32">
+  <script src="https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.13/rewrite_remote/xbs/xtool.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.13/rewrite_remote/xbs/render.css">
 </head>
 
 <body>
@@ -47,7 +47,29 @@
   uploadArea.addEventListener('click', () => {
     fileInput.click();
   });
+  const copyButtons = document.querySelectorAll('.copy-button');
 
+// 为每个按钮添加点击事件处理器
+  copyButtons.forEach(button => {
+      button.addEventListener('click', () => {
+          // 获取按钮的 data-text 属性值
+          const textToCopy = button.getAttribute('data-text');
+          // 创建一个临时文本框
+          const tempInput = document.createElement('input');
+          // 将文本插入到临时文本框中
+          tempInput.value = textToCopy;
+          // 将文本框添加到文档中
+          document.body.appendChild(tempInput);
+          // 选择文本框中的文本
+          tempInput.select();
+          // 执行复制操作
+          document.execCommand('copy');
+          // 删除临时文本框
+          document.body.removeChild(tempInput);
+          // 提示用户
+          alert(`已复制: ${textToCopy}`);
+      });
+  });
 </script>
 
 </html>
