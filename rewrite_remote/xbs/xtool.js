@@ -312,10 +312,13 @@ const Change = {
                             }
 
                             document.body.removeChild(textarea);
+                        } else {
+                            alert(info);
                         }
-                        p.textContent = `${key}`;
-                        outputDiv.appendChild(p);
+
                     });
+                    p.textContent = `${key}`;
+                    outputDiv.appendChild(p);
                 }
 
 
@@ -387,101 +390,6 @@ const Change = {
         };
         reader.readAsArrayBuffer(file);
     },
-    // convertFileBasedOnExtension() {
-    //     const fileInput = document.getElementById('xbsFile');
-    //     const file = fileInput.files[0];
-
-    //     if (!file) {
-    //         alert("Please select a file");
-    //         return;
-    //     }
-
-    //     const reader = new FileReader();
-    //     reader.onload = function (e) {
-    //         const data = new Uint8Array(e.target.result);
-    //         const extension = file.name.split('.').pop().toLowerCase();
-    //         try {
-    //             if (extension === 'json') {
-    //                 const xbs = xbsTools.Json2XBS(data);
-    //                 const xbsBlob = new Blob([xbs], { type: "application/octet-stream" });
-    //                 const downloadLink = document.createElement("a");
-    //                 downloadLink.href = URL.createObjectURL(xbsBlob);
-    //                 downloadLink.download = `${file.name.replace(/\.json$/, '')}.xbs`;
-    //                 downloadLink.click();
-    //             } else if (extension === 'xbs') {
-    //                 const json = xbsTools.XBS2Json(data);
-    //                 const jsonBlob = new Blob([json], { type: "application/json" });
-    //                 const downloadLink = document.createElement("a");
-    //                 downloadLink.download = `${file.name.replace(/\.xbs$/, '')}.json`;
-    //                 downloadLink.href = URL.createObjectURL(jsonBlob);
-    //                 downloadLink.click();
-    //             } else {
-    //                 throw new Error('Unsupported file format');
-    //             }
-
-    //         } catch (error) {
-    //             console.error(`Conversion error:`, error);
-    //             alert(`Conversion error: ${error.message}`);
-    //         }
-    //     };
-
-    //     reader.onerror = function (error) {
-    //         console.error(`File read error:`, error);
-    //         alert(`File read error: ${error.message}`);
-    //     };
-
-    //     reader.readAsArrayBuffer(file);
-    // }
-
-    // convertFileBasedOnExtension() {
-    //     const fileInput = document.getElementById('xbsFile');
-    //     const file = fileInput.files[0];
-
-    //     if (!file) {
-    //         alert("Please select a file");
-    //         return;
-    //     }
-
-    //     const reader = new FileReader();
-    //     reader.onload = function (e) {
-    //         const data = new Uint8Array(e.target.result);
-    //         const extension = file.name.split('.').pop().toLowerCase();
-    //         try {
-    //             let blob, downloadLink, fileName;
-
-    //             if (extension === 'json') {
-    //                 const xbs = xbsTools.Json2XBS(data);
-    //                 blob = new Blob([xbs], { type: "application/octet-stream" });
-    //                 fileName = `${file.name.replace(/\.json$/, '')}.xbs`;
-    //             } else if (extension === 'xbs') {
-    //                 const json = xbsTools.XBS2Json(data);
-    //                 blob = new Blob([json], { type: "application/json" });
-    //                 fileName = `${file.name.replace(/\.xbs$/, '')}.json`;
-    //             } else {
-    //                 throw new Error('Unsupported file format');
-    //             }
-
-    //             downloadLink = document.createElement("a");
-    //             downloadLink.href = URL.createObjectURL(blob);
-    //             downloadLink.download = fileName;
-    //             document.body.appendChild(downloadLink); // Append to body to ensure it works in some browsers
-    //             downloadLink.click();
-    //             document.body.removeChild(downloadLink); // Clean up
-    //             URL.revokeObjectURL(downloadLink.href); // Clean up
-
-    //         } catch (error) {
-    //             console.error(`Conversion error:`, error);
-    //             alert(`Conversion error: ${error.message}`);
-    //         }
-    //     };
-
-    //     reader.onerror = function (error) {
-    //         console.error(`File read error:`, error);
-    //         alert(`File read error: ${error.message}`);
-    //     };
-
-    //     reader.readAsArrayBuffer(file);
-    // }
     convertFileBasedOnExtension() {
         const fileInput = document.getElementById('xbsFile');
         const file = fileInput.files[0];
@@ -491,38 +399,39 @@ const Change = {
             return;
         }
 
+        if (!window.FileReader || !window.Blob || !window.URL || !URL.createObjectURL) {
+            alert("Your browser does not support the required features.");
+            return;
+        }
+
         const reader = new FileReader();
         reader.onload = function (e) {
             const data = new Uint8Array(e.target.result);
             const extension = file.name.split('.').pop().toLowerCase();
+
             try {
                 let blob, downloadLink, fileName;
 
                 if (extension === 'json') {
                     const xbs = xbsTools.Json2XBS(data);
-                    blob = new Blob([xbs], {
-                        type: "application/octet-stream"
-                    });
-                    fileName = `${file.name.replace(/\.json$/, '')}.xbs`;
+                    blob = new Blob([xbs], { type: "application/octet-stream" });
+                    fileName = file.name.replace(/\.json$/, '') + '.xbs';
                 } else if (extension === 'xbs') {
                     const json = xbsTools.XBS2Json(data);
-                    blob = new Blob([json], {
-                        type: "application/json"
-                    });
-                    fileName = `${file.name.replace(/\.xbs$/, '')}.json`;
+                    blob = new Blob([json], { type: "application/json" });
+                    fileName = file.name.replace(/\.xbs$/, '') + '.json';
                 } else {
                     throw new Error('Unsupported file format');
                 }
 
-                // Create a link element
                 downloadLink = document.createElement("a");
                 downloadLink.href = URL.createObjectURL(blob);
                 downloadLink.download = fileName;
 
-                // Append link to the body (necessary for Safari)
+                // Append link to the body for compatibility with some browsers
                 document.body.appendChild(downloadLink);
 
-                // Programmatically trigger a click on the link
+                // Trigger a click on the link
                 downloadLink.click();
 
                 // Clean up
@@ -541,5 +450,11 @@ const Change = {
         };
 
         reader.readAsArrayBuffer(file);
-    }
+
+
+
+
+
+    },
+
 };
