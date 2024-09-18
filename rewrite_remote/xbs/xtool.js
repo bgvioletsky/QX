@@ -407,6 +407,7 @@ const Change = {
         const reader = new FileReader();
         reader.onload = function (e) {
             const data = new Uint8Array(e.target.result);
+            alert(e.target.result)
             const extension = file.name.split('.').pop().toLowerCase();
 
             try {
@@ -456,5 +457,124 @@ const Change = {
 
 
     },
+    fenge() {
+        const jsonFileInput = document.getElementById("xbsFile");
+        const file = jsonFileInput.files[0];
 
+        if (!file) {
+            alert("Please select a JSON file");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const data = new Uint8Array(e.target.result);
+            try {
+                const json = xbsTools.XBS2Json(data);
+                let jsondata = byteTools.uint8Array2JsonObj(json);
+
+                // 确保 jsondata 是一个对象
+                if (typeof jsondata !== 'object' || jsondata === null) {
+                    console.error("JSON 数据格式不正确");
+                    return;
+                }
+
+                Object.keys(jsondata).forEach(key => {
+                    setTimeout(() => {
+                        try {
+                            // 构建新的 JSON 对象
+                            const dd = {};
+                            dd[key] = jsondata[key];
+                            const jsonString = JSON.stringify(dd);
+                            const blob = new Blob([jsonString], { type: 'application/json' });
+
+                            // 创建并配置 FileReader 对象
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                const arrayBuffer = e.target.result;
+                                const data = new Uint8Array(arrayBuffer);
+                                const xbs = xbsTools.Json2XBS(data);
+                                console.log(`${key} 转换为 XBS 结束`);
+                                // 创建 XBS Blob 并下载文件
+                                const xbsBlob = new Blob([xbs], {
+                                    type: "application/octet-stream"
+                                });
+                                const downloadLink = document.createElement("a");
+                                downloadLink.href = URL.createObjectURL(xbsBlob);
+                                downloadLink.download = `${key}.xbs`;
+                                downloadLink.click();
+
+                                // 清理 URL 对象
+                                URL.revokeObjectURL(downloadLink.href);
+                            };
+
+                            // 开始读取 Blob 数据
+                            reader.readAsArrayBuffer(blob);
+                        } catch (error) {
+                            console.error(`转换错误 JSON to XBS (${key}):`, error);
+                        }
+                    }, 1000 * Object.keys(jsondata).indexOf(key)); // 每个 JSON 对象之间延迟 3 秒
+                });
+            } catch (error) {
+                console.error("转换错误 JSON to XBS:", error);
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    },
+    clean() {
+        const xbsFileInput = document.getElementById("xbsFile");
+        const file = xbsFileInput.files[0];
+
+        if (!file) {
+            alert("请选择一个XBS格式文件");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const data = new Uint8Array(e.target.result);
+            try {
+                const json = xbsTools.XBS2Json(data);
+                let jsondata = byteTools.uint8Array2JsonObj(json)
+                for (const key in jsondata) {
+                    let info = jsondata[key]
+                    delete info["password"]
+                }
+                const jsonString = JSON.stringify(jsondata);
+                const blob = new Blob([jsonString], { type: 'application/json' });
+                // 创建并配置 FileReader 对象
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const arrayBuffer = e.target.result;
+                    const data = new Uint8Array(arrayBuffer);
+                    const xbs = xbsTools.Json2XBS(data);
+                    console.log(`转换为 XBS 结束`);
+                    // 创建 XBS Blob 并下载文件
+                    const xbsBlob = new Blob([xbs], {
+                        type: "application/octet-stream"
+                    });
+                    const downloadLink = document.createElement("a");
+                    downloadLink.href = URL.createObjectURL(xbsBlob);
+                    downloadLink.download = `${file.name}`;
+                    downloadLink.click();
+
+                    // 清理 URL 对象
+                    URL.revokeObjectURL(downloadLink.href);
+                };
+
+                // 开始读取 Blob 数据
+                reader.readAsArrayBuffer(blob);
+
+
+
+            } catch (error) {
+                console.error("转换错误 XBS to JSON:", error);
+                alert("转换错误 XBS to JSON");
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    },
+    addMima() {
+        alert("添加成功")
+    }
 };

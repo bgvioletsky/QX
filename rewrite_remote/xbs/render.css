@@ -1,7 +1,6 @@
 body {
     margin: 0px;
     padding: 0px;
-    height: 100vh;
     /* 使 body 高度为视口高度 */
     position: relative;
     /* 使子元素的绝对定位相对于 body */

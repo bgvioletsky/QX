@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <title>香色源转换</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href=https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.15/rewrite_remote/xbs/render_radius.png sizes="32x32">
-  <script src="https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.15/rewrite_remote/xbs/xtool.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.15/rewrite_remote/xbs/render.css">
+  <link rel="icon" href=https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.16/rewrite_remote/xbs/render_radius.png sizes="32x32">
+  <script src="https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.16/rewrite_remote/xbs/xtool.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/bgvioletsky/QX@0.1.16/rewrite_remote/xbs/render.css">
 </head>
 
 <body>
@@ -33,8 +33,13 @@
       </div>
       <div class="bt">
         <button onclick="Change.convertFileBasedOnExtension()"
-          title="点击后将上传文件转化为对应文件例如: \n xbs > json json > xbs">转换</button>
+          title="点击后将上传文件转化为对应文件例如:xbs > json json > xbs">转换</button>
+        <button onclick="Change.fenge()"
+          title="点击后将上传文件分割转化为对应文件">分割</button>
         <button onclick="Change.show()" title="点击后将显示该xbs文件中源密码">显示密码</button>
+        <button onclick="Change.clean()" title="点击后将清除该xbs文件中源密码">清除密码</button>
+        <!-- <button onclick="Change.edit()" title="点击后将添加密码到该xbs文件中">编辑</button> -->
+
       </div>
     </div>
     <div id="output"></div>
