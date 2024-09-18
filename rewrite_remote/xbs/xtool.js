@@ -265,63 +265,62 @@ const Change = {
     show() {
         const xbsFileInput = document.getElementById("xbsFile");
         const file = xbsFileInput.files[0];
-    
+
         if (!file) {
             alert("请选择一个XBS格式文件");
             return;
         }
-    
+
         const reader = new FileReader();
         reader.onload = function (e) {
             const data = new Uint8Array(e.target.result);
             try {
                 const json = xbsTools.XBS2Json(data);
-                let  jsondata=byteTools.uint8Array2JsonObj(json)
+                let jsondata = byteTools.uint8Array2JsonObj(json)
                 const outputDiv = document.getElementById("output");
-            if (!outputDiv) {
-                console.error("Element with ID 'output' not found.");
-                return;
-            }
-            while (outputDiv.firstChild) {
-                outputDiv.removeChild(outputDiv.firstChild);
-            }
-            for (const key in jsondata) {
-                let info=jsondata[key].password
-                 // 检查 password 是否存在且不为空
-                if (info === undefined || info === null || info === "") {
-                    info = "无密码";
+                if (!outputDiv) {
+                    console.error("Element with ID 'output' not found.");
+                    return;
                 }
-                const p = document.createElement("div");
-                p.addEventListener('click', () => {
-                    const textarea = document.createElement('textarea');
-                    textarea.value = info;
-                    if(info!=="无密码"){
-                        document.body.appendChild(textarea);
-                    textarea.select();
-                    
-                    try {
-                        const successful = document.execCommand('copy');
-                        if (successful) {
-                            alert('密码：'+info+'\n已经复制到剪贴板');
-                        } else {
-                            alert('复制到剪贴板失败');
-                        }
-                    } catch (err) {
-                        alert('复制到剪贴板失败');
-                        console.error('复制到剪贴板失败: ', err);
+                while (outputDiv.firstChild) {
+                    outputDiv.removeChild(outputDiv.firstChild);
+                }
+                for (const key in jsondata) {
+                    let info = jsondata[key].password
+                    // 检查 password 是否存在且不为空
+                    if (info === undefined || info === null || info === "") {
+                        info = "无密码";
                     }
+                    const p = document.createElement("div");
+                    p.addEventListener('click', () => {
+                        const textarea = document.createElement('textarea');
+                        textarea.value = info;
+                        if (info !== "无密码") {
+                            document.body.appendChild(textarea);
+                            textarea.select();
 
-                    document.body.removeChild(textarea);
-                    }
-                    
-                });
-                p.textContent = `${key}`;
-                outputDiv.appendChild(p);
-            }
-           
-           
-               
-            
+                            try {
+                                const successful = document.execCommand('copy');
+                                if (successful) {
+                                    alert('密码：' + info + '\n已经复制到剪贴板');
+                                } else {
+                                    alert('复制到剪贴板失败');
+                                }
+                            } catch (err) {
+                                alert('复制到剪贴板失败');
+                                console.error('复制到剪贴板失败: ', err);
+                            }
+
+                            document.body.removeChild(textarea);
+                        }
+                        p.textContent = `${key}`;
+                        outputDiv.appendChild(p);
+                    });
+                }
+
+
+
+
             } catch (error) {
                 console.error("转换错误 XBS to JSON:", error);
                 alert("转换错误 XBS to JSON");
@@ -344,11 +343,13 @@ const Change = {
 
             try {
                 const xbs = xbsTools.Json2XBS(data);
-                const xbsBlob = new Blob([xbs], { type: "application/octet-stream" });
+                const xbsBlob = new Blob([xbs], {
+                    type: "application/octet-stream"
+                });
                 const downloadLink = document.createElement("a");
                 // 保留原文件名，仅更改扩展名为 .xbs
-                downloadLink.download = `${file.name.replace(/\.json$/, '')}.xbs`;
                 downloadLink.href = URL.createObjectURL(xbsBlob);
+                downloadLink.download = `${file.name.replace(/\.json$/, '')}.xbs`;
                 downloadLink.click();
             } catch (error) {
                 console.error("转换错误 JSON to XBS:", error);
@@ -360,23 +361,25 @@ const Change = {
     convertXbsToJson() {
         const xbsFileInput = document.getElementById("xbsFile");
         const file = xbsFileInput.files[0];
-    
+
         if (!file) {
             alert("Please select an XBS file");
             return;
         }
-    
+
         const reader = new FileReader();
         reader.onload = function (e) {
             const data = new Uint8Array(e.target.result);
             try {
                 const json = xbsTools.XBS2Json(data);
-                const jsonBlob = new Blob([json], { type: "application/json" });
+                const jsonBlob = new Blob([json], {
+                    type: "application/json"
+                });
                 const downloadLink = document.createElement("a");
                 downloadLink.download = `${file.name.replace(/\.xbs$/, '')}.json`;
                 downloadLink.href = URL.createObjectURL(jsonBlob);
                 downloadLink.click();
-            
+
             } catch (error) {
                 console.error("转换错误 XBS to JSON:", error);
                 alert("转换错误 XBS to JSON");
@@ -384,74 +387,159 @@ const Change = {
         };
         reader.readAsArrayBuffer(file);
     },
+    // convertFileBasedOnExtension() {
+    //     const fileInput = document.getElementById('xbsFile');
+    //     const file = fileInput.files[0];
+
+    //     if (!file) {
+    //         alert("Please select a file");
+    //         return;
+    //     }
+
+    //     const reader = new FileReader();
+    //     reader.onload = function (e) {
+    //         const data = new Uint8Array(e.target.result);
+    //         const extension = file.name.split('.').pop().toLowerCase();
+    //         try {
+    //             if (extension === 'json') {
+    //                 const xbs = xbsTools.Json2XBS(data);
+    //                 const xbsBlob = new Blob([xbs], { type: "application/octet-stream" });
+    //                 const downloadLink = document.createElement("a");
+    //                 downloadLink.href = URL.createObjectURL(xbsBlob);
+    //                 downloadLink.download = `${file.name.replace(/\.json$/, '')}.xbs`;
+    //                 downloadLink.click();
+    //             } else if (extension === 'xbs') {
+    //                 const json = xbsTools.XBS2Json(data);
+    //                 const jsonBlob = new Blob([json], { type: "application/json" });
+    //                 const downloadLink = document.createElement("a");
+    //                 downloadLink.download = `${file.name.replace(/\.xbs$/, '')}.json`;
+    //                 downloadLink.href = URL.createObjectURL(jsonBlob);
+    //                 downloadLink.click();
+    //             } else {
+    //                 throw new Error('Unsupported file format');
+    //             }
+
+    //         } catch (error) {
+    //             console.error(`Conversion error:`, error);
+    //             alert(`Conversion error: ${error.message}`);
+    //         }
+    //     };
+
+    //     reader.onerror = function (error) {
+    //         console.error(`File read error:`, error);
+    //         alert(`File read error: ${error.message}`);
+    //     };
+
+    //     reader.readAsArrayBuffer(file);
+    // }
+
+    // convertFileBasedOnExtension() {
+    //     const fileInput = document.getElementById('xbsFile');
+    //     const file = fileInput.files[0];
+
+    //     if (!file) {
+    //         alert("Please select a file");
+    //         return;
+    //     }
+
+    //     const reader = new FileReader();
+    //     reader.onload = function (e) {
+    //         const data = new Uint8Array(e.target.result);
+    //         const extension = file.name.split('.').pop().toLowerCase();
+    //         try {
+    //             let blob, downloadLink, fileName;
+
+    //             if (extension === 'json') {
+    //                 const xbs = xbsTools.Json2XBS(data);
+    //                 blob = new Blob([xbs], { type: "application/octet-stream" });
+    //                 fileName = `${file.name.replace(/\.json$/, '')}.xbs`;
+    //             } else if (extension === 'xbs') {
+    //                 const json = xbsTools.XBS2Json(data);
+    //                 blob = new Blob([json], { type: "application/json" });
+    //                 fileName = `${file.name.replace(/\.xbs$/, '')}.json`;
+    //             } else {
+    //                 throw new Error('Unsupported file format');
+    //             }
+
+    //             downloadLink = document.createElement("a");
+    //             downloadLink.href = URL.createObjectURL(blob);
+    //             downloadLink.download = fileName;
+    //             document.body.appendChild(downloadLink); // Append to body to ensure it works in some browsers
+    //             downloadLink.click();
+    //             document.body.removeChild(downloadLink); // Clean up
+    //             URL.revokeObjectURL(downloadLink.href); // Clean up
+
+    //         } catch (error) {
+    //             console.error(`Conversion error:`, error);
+    //             alert(`Conversion error: ${error.message}`);
+    //         }
+    //     };
+
+    //     reader.onerror = function (error) {
+    //         console.error(`File read error:`, error);
+    //         alert(`File read error: ${error.message}`);
+    //     };
+
+    //     reader.readAsArrayBuffer(file);
+    // }
     convertFileBasedOnExtension() {
-    const fileInput = document.getElementById('xbsFile');
-    const file = fileInput.files[0];
+        const fileInput = document.getElementById('xbsFile');
+        const file = fileInput.files[0];
 
-    if (!file) {
-        alert("Please select a file");
-        return;
-    }
+        if (!file) {
+            alert("Please select a file");
+            return;
+        }
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const data = new Uint8Array(e.target.result);
-        const extension = Change.getFileExtension(file.name);
-        console.log(file.name);
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const data = new Uint8Array(e.target.result);
+            const extension = file.name.split('.').pop().toLowerCase();
+            try {
+                let blob, downloadLink, fileName;
 
-        try {
-            let result;
-            let name;
-            if (extension[1] === 'json') {
-                result = xbsTools.Json2XBS(data);
-                name = "xbs";
-            } else if (extension[1] === 'xbs') {
-                result = xbsTools.XBS2Json(data);
-                name = "json";
-            } else {
-                throw new Error('Unsupported file format');
+                if (extension === 'json') {
+                    const xbs = xbsTools.Json2XBS(data);
+                    blob = new Blob([xbs], {
+                        type: "application/octet-stream"
+                    });
+                    fileName = `${file.name.replace(/\.json$/, '')}.xbs`;
+                } else if (extension === 'xbs') {
+                    const json = xbsTools.XBS2Json(data);
+                    blob = new Blob([json], {
+                        type: "application/json"
+                    });
+                    fileName = `${file.name.replace(/\.xbs$/, '')}.json`;
+                } else {
+                    throw new Error('Unsupported file format');
+                }
+
+                // Create a link element
+                downloadLink = document.createElement("a");
+                downloadLink.href = URL.createObjectURL(blob);
+                downloadLink.download = fileName;
+
+                // Append link to the body (necessary for Safari)
+                document.body.appendChild(downloadLink);
+
+                // Programmatically trigger a click on the link
+                downloadLink.click();
+
+                // Clean up
+                document.body.removeChild(downloadLink);
+                URL.revokeObjectURL(downloadLink.href);
+
+            } catch (error) {
+                console.error(`Conversion error:`, error);
+                alert(`Conversion error: ${error.message}`);
             }
+        };
 
-            const mimeType = extension[1] === 'json' ? 'application/json' : 'application/octet-stream';
-            const blob = new Blob([result], { type: mimeType });
+        reader.onerror = function (error) {
+            console.error(`File read error:`, error);
+            alert(`File read error: ${error.message}`);
+        };
 
-            // 创建下载链接
-            const downloadLink = document.createElement("a");
-            downloadLink.download = extension[0]+"."+name;
-            downloadLink.href = URL.createObjectURL(blob);
-            // 触发下载
-            Change.triggerDownload(downloadLink);
-
-            
-        } catch (error) {
-            console.error(`转换错误 file:`, error);
-            alert(`转换错误 file: ${error.message}`);
-        }
-    };
-
-    reader.onerror = function (error) {
-        console.error(`文件读取错误:`, error);
-        alert(`文件读取错误: ${error.message}`);
-    };
-
-    reader.readAsArrayBuffer(file);
-    },
-    getFileExtension(filename) {
-        return filename.split('.'); // 提取并转换为小写
-    },
-
-    triggerDownload(link) {
-        if (document.createEvent) {
-            const event = document.createEvent('MouseEvents');
-            event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-            link.dispatchEvent(event);
-        } else if (link.fireEvent) {
-            link.fireEvent('onclick');
-        } else {
-            link.click();
-        }
+        reader.readAsArrayBuffer(file);
     }
-
-    
-    
 };
