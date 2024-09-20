@@ -1,9 +1,7 @@
 body {
     margin: 0px;
     padding: 0px;
-    /* 使 body 高度为视口高度 */
     position: relative;
-    /* 使子元素的绝对定位相对于 body */
     background-color: #bde2c6;
 }
 
@@ -12,20 +10,6 @@ h1 {
     font: 3em sans-serif;
 }
 
-#uploadArea {
-    border: 1px;
-    border-radius: 30px;
-    height: 300px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 16px;
-    color: #007bff;
-    cursor: pointer;
-    background-color: #f8f9fa;
-}
 
 #xbsFile {
     display: none;
@@ -60,26 +44,31 @@ svg {
     height: 300px;
     transform: translate(-50%, -50%);
 }
+#uploadArea {
+    border: 1px;
+    border-radius: 30px;
+    height: 400px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 60px;
+    color: #00daf2;
+    cursor: pointer;
+    background-color: #f8f9fa;
+}
 
+.bt{
+    /* border-radius: 4px; */
+    /* margin: 12px; */
+    text-align: center;
+}
 .p1 {
     margin: 0;
     padding: 0;
-    font-size: 20px;
-    color: black;
-}
-.bt{
-    border-radius: 4px;
-    margin: 12px;
-    text-align: center;
-}
-.bt button {
-    width: 100px;
-    background-color: #45c7e1;
-    border: 0px;
-    border-radius: 12px;
-    margin: 10px;
-    height: 50px;
-    color: rgba(203, 18, 176, 0.857);
+    font-size: 30px;
+    /* color: black; */
 }
 #output {
     margin: 500px 0 0 0;
@@ -102,4 +91,87 @@ svg {
     margin: 10px;
     align-items: center;
     overflow: hidden;
+}
+.bt button {
+    width: 100px;
+    background-color: #45c7e1;
+    border: 0px;
+    border-radius: 12px;
+    margin: 30px 20px 0px 20px;
+    height: 60px;
+    color: rgba(203, 18, 176, 0.857);
+    font-size: 20px;
+}
+@media only screen and (max-width: 767px) and (min-width: 320px){
+    .bt button {
+        width: 70px;
+        background-color: #45c7e1;
+        border: 0px;
+        border-radius: 12px;
+        margin: 10px 2px 0px 2px;
+        height: 30px;
+        color: rgba(203, 18, 176, 0.857);
+        font-size: 10px;
+    }
+    #uploadArea {
+        border: 1px;
+        border-radius: 30px;
+        height: 150px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 16px;
+        color: #0ad6fa;
+        cursor: pointer;
+        background-color: #f8f9fa;
+    }
+    .p1 {
+        margin: 0;
+        padding: 0;
+        font-size: 10px;
+        /* color: black; */
+    }
+    svg {
+        width: 50px;
+        height: 50px;
+        color: #0ad6fa;
+        padding: 20px;
+    }
+}
+
+
+@media only screen and (max-width: 1366px) and (min-width: 768px) {
+    .bt button {
+        width: 70px;
+        background-color: #45c7e1;
+        border: 0px;
+        border-radius: 12px;
+        margin: 30px 5px 0px 5px;
+        height: 50px;
+        color: rgba(203, 18, 176, 0.857);
+        font-size: 10px;
+    }
+    #uploadArea {
+        border: 1px;
+        border-radius: 30px;
+        height: 300px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 16px;
+        color: #007bff;
+        cursor: pointer;
+        background-color: #f8f9fa;
+    }
+    .p1 {
+        margin: 0;
+        padding: 0;
+        font-size: 30px;
+        color: #0ad6fa;
+    }
+    
 }
