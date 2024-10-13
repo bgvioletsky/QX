@@ -2,7 +2,7 @@
     "name": "my-script",
     "task": [
         {
-            "config": "5 0 * * * https://jsd.proxy.aks.moe/gh/bgvioletsky/QX@main/QX_js/sxmd.js, img-url=https://cdn.jsdelivr.net/gh/bgvioletsky/QX/icon/Catcat/321fedebb7000d40.png, tag='书香门第签到', enabled=true"
+            "config": "5 0 * * * https://jsd.proxy.aks.moe/gh/bgvioletsky/QX@main/QX_js/sxmd.js, img-url=https://cdn.jsdelivr.net/gh/bgvioletsky/QX/icon/Catcat/321fedebb7000d40.png, tag=书香门第签到, enabled=true"
         }
     ],
     "description": "这是一个定时脚本."
