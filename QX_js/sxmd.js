@@ -1,10 +1,10 @@
 const $ = new Env('书香门第签到')
-let account = '';
-let password = '';
+let account = '账号';
+let password = '密码';
 let host = "www.txtnovel.vip"
 $.result = "【书香门第】：";
-$.log(`\n书香门第网址为：https://${host}\n签到开始`)
 $.cookie = ""
+$.isMute=false
 async function login() {
     try {
         let loginurl =
@@ -79,10 +79,12 @@ async function sign() {
         let data = `formhash=${$.formhash}&qdxq=kx`;
         let headers = {
             Host: `${host}`,
-            referer: `http://${host}/member.php?mod=logging&action=login&mobile=2`,
+            referer: `http://${host}/plugin.php?id=dsu_paulsign:sign&mobile=yes`,
             cookie: $.cookie,
+            "Content-Type": "application/x-www-form-urlencoded",
             "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Mobile/15E148 Snapchat/10.77.5.59 (like Safari/604.1)",
         }
+
         const myRequest = {
             url: url,
             method: 'POST', // Optional, default GET.
@@ -95,6 +97,8 @@ async function sign() {
                 $.subt="签到成功！"
                 return true;
             }else{
+                $.log("签到参数：" + data)
+                $.log("签到返回：" + res.body)
                 $.subt="签到失败！"
                 return false;
             }
@@ -140,7 +144,7 @@ async function task() {
         await sign();
     }
     await info();
-    $.msg($.name, $.subt, $.result)
+    $.msg(`书香门第网址为：https://${host}`, $.subt, $.result)
     $.done();
 }
 task()
