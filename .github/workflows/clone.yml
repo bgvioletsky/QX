@@ -36,7 +36,7 @@ jobs:
                  fi                 
                  echo "version=$(bash version.sh)" >> $GITHUB_ENV
                  echo "## $(cat version)" >> bgcode.txt
-                 echo "发布时间：$(date +'%Y-%m-%d %H:%M:%S')" >> bgcode.txt
+                 echo "发布时间：$(date +'%Y-%m-%d %H:%M:%S')" > bgcode.txt
 
             # - name: 下载广告reject
             #   run: |
