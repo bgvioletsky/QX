@@ -356,7 +356,7 @@ const Change = {
                 downloadLink.click();
             } catch (error) {
                 console.error("转换错误 JSON to XBS:", error);
-                alert("转换错误 JSON to XBS");
+                ("转换错误 JSON to XBS");
             }
         };
         reader.readAsArrayBuffer(file);
@@ -366,7 +366,7 @@ const Change = {
         const file = xbsFileInput.files[0];
 
         if (!file) {
-            alert("Please select an XBS file");
+            ("Please select an XBS file");
             return;
         }
 
@@ -385,7 +385,7 @@ const Change = {
 
             } catch (error) {
                 console.error("转换错误 XBS to JSON:", error);
-                alert("转换错误 XBS to JSON");
+                ("转换错误 XBS to JSON");
             }
         };
         reader.readAsArrayBuffer(file);
@@ -395,19 +395,18 @@ const Change = {
         const file = fileInput.files[0];
 
         if (!file) {
-            alert("Please select a file");
+            ("Please select a file");
             return;
         }
 
         if (!window.FileReader || !window.Blob || !window.URL || !URL.createObjectURL) {
-            alert("Your browser does not support the required features.");
+            ("Your browser does not support the required features.");
             return;
         }
 
         const reader = new FileReader();
         reader.onload = function (e) {
             const data = new Uint8Array(e.target.result);
-            alert(e.target.result)
             const extension = file.name.split('.').pop().toLowerCase();
 
             try {
